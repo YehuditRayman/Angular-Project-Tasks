@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+/* --- Layout --- */
+.page-layout-content {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-row { text-align: center; margin-bottom: 32px; }
+
+h1.page-title {
+  font-family: 'Pacifico', cursive !important;
+  font-size: 42px;
+  color: var(--app-primary);
+  margin: 0 0 8px 0;
+  font-weight: 400;
+}
+
+.subtitle { color: #78909c; font-size: 16px; margin: 0; }
+
+/* --- Filters --- */
+.filters-container {
+  display: flex; justify-content: center; gap: 24px; margin-bottom: 40px; flex-wrap: wrap;
+}
+.filter-group { display: flex; flex-direction: column; gap: 8px; width: 220px; }
+.filter-label { font-size: 14px; font-weight: 600; color: #546e7a; margin-right: 4px; }
+
+.clean-select-field {
+  width: 100%; background: white; border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); height: 48px;
+}
+/* הסתרת מסגרות */
+::ng-deep .clean-select-field .mdc-notched-outline { display: none !important; } 
+::ng-deep .clean-select-field .mat-mdc-form-field-subscript-wrapper { display: none; }
+::ng-deep .clean-select-field .mat-mdc-form-field-infix { 
+  padding-top: 12px !important; padding-bottom: 0 !important; min-height: auto !important; border: none;
+}
+::ng-deep .clean-select-field .mat-mdc-select-value { font-weight: 600; color: #37474f; }
+
+
+/* --- Grid --- */
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* כרטיס רחב ונוח */
+  gap: 24px;
+}
+
+/* --- Task Card --- */
+.task-card {
+  height: 100%;
+  display: flex; flex-direction: column;
+  border-radius: 16px !important;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.task-card.hover-elevate:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--app-primary);
+}
+
+
+/* === Context Badges (החלק החשוב) === */
+.card-context-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 16px 0 16px;
+  border-bottom: 1px dashed #f0f0f0; /* קו הפרדה עדין */
+  padding-bottom: 12px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  border: 1px solid transparent;
+}
+
+.badge .label {
+  opacity: 0.7;
+  font-weight: 400;
+  margin-left: 4px; /* רווח בין "צוות:" לשם הצוות */
+}
+
+.badge .value {
+  font-weight: 700;
+}
+
+/* צבע לצוות */
+.team-badge {
+  background-color: #e0f2f1; /* טורקיז בהיר */
+  color: #00695c;
+  border-color: #b2dfdb;
+}
+
+/* צבע לפרויקט */
+.project-badge {
+  background-color: #f3e5f5; /* סגול בהיר */
+  color: #6a1b9a;
+  border-color: #e1bee7;
+}
+
+
+/* --- Status Pill --- */
+.status-container { margin-top: 12px; margin-bottom: 8px; }
+
+.status-pill {
+  display: inline-block;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 20px;
+}
+.status-todo { background: #fff3e0; color: #ef6c00; }
+.status-progress { background: #e3f2fd; color: #1565c0; }
+.status-done { background: #e8f5e9; color: #2e7d32; }
+
+
+/* --- Content --- */
+.task-title {
+  margin: 4px 0 8px 0;
+  font-size: 18px; font-weight: 600; color: #263238;
+}
+
+.task-desc {
+  font-size: 14px; color: #90a4ae; line-height: 1.5;
+  margin-bottom: 16px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+
+/* --- Meta --- */
+.task-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px;
+  border-top: 1px solid #f5f5f5; padding-top: 12px; margin-top: auto;
+}
+.priority-text { font-weight: 700; }
+.text-high { color: #e53935; }
+.text-normal { color: #1e88e5; }
+.text-low { color: #43a047; }
+.due-date { color: #78909c; font-weight: 500; }
+
+/* --- Button --- */
+mat-card-actions a[mat-button] { font-weight: 600; border-radius: 8px; }
+
+/* --- Loading --- */
+.loading-state, .empty-state {
+  grid-column: 1 / -1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 60px; text-align: center;
+}

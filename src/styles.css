@@ -1,0 +1,110 @@
+/* styles.css */
+
+/* הערה חשובה: בקובץ CSS רגיל יש לוודא שיש לך Theme בסיסי טעון ב-angular.json 
+   (למשל: indigo-pink.css). הקוד למטה "ילביש" עליו את העיצוב המותאם שלנו.
+*/
+
+:root {
+  /* הגדרת פלטת צבעים עסקית (Deep Indigo & Slate) */
+  --app-primary: #283593;       /* כחול עמוק ומקצועי */
+  --app-primary-light: #5f5fc4; /* גוון בהיר יותר לגרדיאנט */
+  --app-bg: #f5f7fa;            /* רקע אפור-בהיר מאוד ונעים לעין */
+  --app-text-main: #2c3e50;
+  --app-card-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --app-card-hover: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--app-bg);
+  font-family: 'Roboto', "Helvetica Neue", sans-serif;
+  color: var(--app-text-main);
+
+}
+
+/* ============================================================
+   Global Overrides - Pure CSS
+   ============================================================ */
+
+/* 1. הסרת כל האייקונים באופן גורף */
+mat-icon {
+  display: none !important;
+}
+
+/* 2. עיצוב כפתור הוספה (FAB) - היחיד שנשאר בולט */
+.mat-mdc-fab, .mat-mdc-mini-fab {
+  /* גרדיאנט כחול עמוק למראה יוקרתי */
+  background: linear-gradient(135deg, var(--app-primary), var(--app-primary-light)) !important;
+  box-shadow: 0 4px 15px rgba(40, 53, 147, 0.4) !important;
+  color: white !important;
+  position: relative;
+}
+
+/* החזרת סימן הפלוס (+) בלבד באמצעות טקסט, מכיוון שהאייקון הוסתר */
+.mat-mdc-fab::after, .mat-mdc-mini-fab::after {
+  content: "+";
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -54%); /* דיוק אופטי למרכז */
+}
+
+/* 3. עיצוב כרטיסים (Cards) - נקי וצף */
+.mat-mdc-card {
+  border-radius: 12px !important;
+  background-color: white !important;
+  box-shadow: var(--app-card-shadow) !important;
+  border: 1px solid rgba(0,0,0,0.03); /* מסגרת כמעט שקופה */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden; /* למניעת בריחת תוכן בפינות */
+}
+
+.mat-mdc-card:hover {
+  transform: translateY(-4px); /* תזוזה קלה למעלה */
+  box-shadow: var(--app-card-hover) !important;
+}
+
+/* 4. כותרות וטיפוגרפיה */
+h1, h2, h3, h4, .mat-headline-small, .mat-title-large {
+  font-weight: 300 !important; /* דק ואלגנטי */
+  color: var(--app-primary);
+  margin-bottom: 16px;
+}
+
+/* 5. כפתורים רגילים (Buttons) */
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-outlined-button {
+  letter-spacing: 0.5px;
+  font-weight: 500 !important;
+}
+
+/* שיפור הניראות של שדות קלט (Inputs) */
+.mat-mdc-form-field {
+  width: 100%;
+}
+.center-layout-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh; /* ממקם במרכז הגובה */
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.auth-card-width {
+  width: 100%;
+  max-width: 420px; /* רוחב אופטימלי לטפסי כניסה */
+}
+
+/* התאמה קטנה לטאבים של Material בתוך כרטיס */
+.mat-mdc-tab-link-container {
+  background-color: rgba(0,0,0,0.02); 
+}
+.dialog-no-padding .mat-mdc-dialog-container .mat-mdc-dialog-surface { 
+  padding: 0 !important; 
+  border-radius: 16px !important; 
+  overflow: hidden !important; 
+}

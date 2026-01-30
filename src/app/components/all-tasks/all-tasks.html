@@ -1,0 +1,106 @@
+<div class="page-layout-content">
+
+  <header class="header-row">
+    <h1 class="page-title">My all tasks</h1>
+  </header>
+
+  <div class="filters-container">
+    <div class="filter-group">
+      <label class="filter-label">Filter by team:</label>
+      <mat-form-field appearance="outline" class="clean-select-field">
+        <mat-select [value]="selectedTeamId()" (selectionChange)="onTeamChange($event.value)">
+          <mat-option [value]="null">All teams</mat-option>
+          @for (team of availableTeams(); track team.id) {
+            <mat-option [value]="team.id">{{ team.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Filter by project:</label>
+      <mat-form-field appearance="outline" class="clean-select-field">
+        <mat-select [value]="selectedProjectId()" (selectionChange)="selectedProjectId.set($event.value)"
+                    [disabled]="availableProjects().length === 0">
+          <mat-option [value]="null">All projects</mat-option>
+          @for (proj of availableProjects(); track proj.id) {
+            <mat-option [value]="proj.id">{{ proj.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <main class="tasks-grid">
+    
+    @if (tasksService.isLoading()) {
+      <div class="loading-state">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    }
+
+    @else {
+      
+      @for (task of filteredTasks(); track task.id) {
+        <mat-card class="task-card hover-elevate">
+          
+          <div class="card-context-header">
+            <span class="badge team-badge">
+              <span class="label">Team:</span> 
+              <span class="value">{{ task.team_name }}</span>
+            </span>
+
+            <span class="badge project-badge">
+              <span class="label">Project:</span>
+              <span class="value">{{ task.project_name }}</span>
+            </span>
+          </div>
+
+          <mat-card-content style="padding: 16px; flex: 1;">
+            
+            <div class="status-container">
+              <span class="status-pill" 
+                   [ngClass]="{
+                     'status-todo': task.status === 'todo',
+                     'status-progress': task.status === 'in_progress',
+                     'status-done': task.status === 'done'
+                   }">
+                {{ task.status === 'todo' ? 'To be performed' : (task.status === 'in_progress' ? 'In progress' : 'Done') }}
+              </span>
+            </div>
+
+            <h3 class="task-title">{{ task.title }}</h3>
+            
+            @if (task.description) {
+              <p class="task-desc">{{ task.description }}</p>
+            }
+            
+            <div class="task-meta">
+              <span class="priority-text" [ngClass]="'text-' + (task.priority || 'normal')">
+                {{ task.priority === 'high' ? 'High' : (task.priority === 'low' ? 'low' : 'normal') }}
+              </span>
+              
+              @if (task.due_date) {
+                <span class="due-date">Deadline: {{ task.due_date | date:'dd/MM/yy' }}</span>
+              }
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions align="end" style="padding: 16px; border-top: 1px solid #f5f5f5;">
+            <a mat-button color="primary" [routerLink]="['/projects', task.projectId , 'tasks']">
+             Go to board
+            </a>
+          </mat-card-actions>
+
+        </mat-card>
+      } @empty {
+        <div class="empty-state">
+          <h3>No tasks to display</h3>
+          <p>No tasks were found according to the selected filter.</p>
+        </div>
+      }
+
+    }
+
+  </main>
+</div>

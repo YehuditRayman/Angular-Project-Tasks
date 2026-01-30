@@ -1,0 +1,134 @@
+<div class="page-layout-content">
+
+  <header class="header-row">
+    <div>
+      <h1 class="page-title">Teams</h1>
+    </div>
+
+    <div class="actions-container" style="display: flex; gap: 16px;">
+      
+      <button  color="accent" class="animated-fab" (click)="openAddMemberDialogGlobal()">
+        <span class="plus-sign">+</span>
+        <span class="fab-text">Add member</span>
+      </button>
+
+      <button color="primary" class="animated-fab" (click)="openCreateDialog()">
+        <span class="plus-sign">+</span>
+        <span class="fab-text">add team</span>
+      </button>
+
+    </div>
+  </header>
+
+  <main class="content-grid">
+
+    @if (teamsService.isLoading()) {
+      <div class="loading-state">
+        <mat-spinner diameter="60" color="primary"></mat-spinner>
+      </div>
+    }
+
+    @else if (teamsService.error()) {
+      <div class="error-state">
+        <p class="mat-body-1" style="color: #d32f2f;">
+          Error: {{ teamsService.error() }}
+        </p>
+        <button mat-stroked-button color="warn" (click)="teamsService.loadTeams()">Try again</button>
+      </div>
+    }
+
+    @else {
+      @for (team of teamsService.myTeams(); track team.id) {
+        
+        <mat-card class="team-card hover-elevate">
+          <mat-card-header>
+            <mat-card-title>{{ team.name }}</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content style="margin-top: 16px;">
+            <div class="meta-info">
+              <span class="label">Team members:</span>
+              <span class="value">{{ team.members_count || 0 }}</span>
+            </div>
+          </mat-card-content>
+
+          <div style="flex: 1;"></div>
+
+          <mat-card-actions align="end" style="padding: 16px;">
+            <button mat-stroked-button 
+                    color="primary" 
+                    class="enter-btn"
+                    [routerLink]="['/projects', team.id]">
+              Enter projects
+            </button>
+          </mat-card-actions>
+        </mat-card>
+
+      } @empty {
+        <div class="empty-state">
+            <h3 class="mat-title-large">No teams yet</h3>
+            <p class="mat-body-1" style="color: #666;">Create your first space to get started</p>
+            <button mat-raised-button color="primary" (click)="openCreateDialog()" style="margin-top: 16px;">
+              Create team
+            </button>
+        </div>
+      }
+    }
+  </main>
+</div>
+
+<ng-template #createTeamDialog>
+  <h2 mat-dialog-title>Create team</h2>
+  <mat-dialog-content>
+    <p style="margin-bottom: 16px; color: #666;">Enter a name for your new team to get started.</p>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Team name</mat-label>
+      <input matInput [formControl]="newTeamNameControl" placeholder="For example: developing..." cdkFocusInitial>
+      @if (newTeamNameControl.invalid) {
+        <mat-error>Name required</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" style="padding-bottom: 24px; padding-left: 24px;">
+    <button mat-button mat-dialog-close>ביטול</button>
+    <button mat-raised-button color="primary" (click)="createNewTeam()" [disabled]="newTeamNameControl.invalid">
+       Save team
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #addMemberDialog>
+  <h2 mat-dialog-title>Add member to team</h2>
+  <mat-dialog-content style="display: flex; flex-direction: column; gap: 16px;">
+    <p style="margin-bottom: 0; color: #666;">Select a team and enter the user ID you want to attach.</p>
+    
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>בחר צוות</mat-label>
+      <mat-select [formControl]="teamSelectControl">
+        @for(team of teamsService.myTeams(); track team.id) {
+          <mat-option [value]="team.id">{{ team.name }}</mat-option>
+        }
+      </mat-select>
+      @if (teamSelectControl.hasError('required')) {
+        <mat-error>Must choose a team</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>User ID</mat-label>
+      <input matInput type="number" [formControl]="memberIdControl" placeholder="For example: 105">
+      @if (memberIdControl.invalid) {
+        <mat-error>A valid ID number must be entered.</mat-error>
+      }
+    </mat-form-field>
+
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end" style="padding-bottom: 24px; padding-left: 24px;">
+    <button mat-button mat-dialog-close>ביטול</button>
+    <button mat-raised-button color="primary" (click)="addMemberToTeam()" 
+            [disabled]="memberIdControl.invalid || teamSelectControl.invalid">
+       Add member
+    </button>
+  </mat-dialog-actions>
+</ng-template>

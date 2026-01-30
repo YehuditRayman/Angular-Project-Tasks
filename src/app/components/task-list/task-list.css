@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+/* --- משתנים גלובליים --- */
+:root {
+  --primary-color: #3f51b5;
+  --bg-color: #fafafa;
+  --column-bg: #f3f4f6;
+}
+
+/* --- פריסת עמוד ראשית --- */
+.page-layout-content {
+  padding: 24px;
+  max-width: 100%;
+  margin: 0 auto;
+  /* גובה מלא למחשב, בטלפון נבטל את זה כדי לאפשר גלילה טבעית */
+  height: calc(100vh - 64px); 
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--bg-color);
+  overflow: hidden; /* למנוע גלילה כפולה במחשב */
+}
+
+/* --- Header --- */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 8px;
+  flex-wrap: wrap; /* חשוב לרספונסיביות */
+  gap: 16px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+h1.page-title {
+  font-family: 'Pacifico', cursive !important;
+  font-size: 28px;
+  color: var(--primary-color);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* --- כפתור הוספה (FAB) --- */
+.animated-fab {
+  background: linear-gradient(135deg, #2b3da3 0%, #7884d3 100%) !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.plus-sign {
+  font-size: 28px;
+  line-height: 28px;
+  transition: transform 0.5s ease;
+  flex-shrink: 0;
+}
+
+.fab-text {
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 600;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* אנימציה במחשב בלבד */
+@media (hover: hover) {
+  .animated-fab:hover {
+    width: 150px !important;
+    justify-content: flex-start !important;
+    padding-right: 12px !important;
+  }
+  .animated-fab:hover .plus-sign {
+    transform: rotate(180deg);
+    margin-left: 8px;
+  }
+  .animated-fab:hover .fab-text {
+    max-width: 100px;
+    opacity: 1;
+  }
+}
+
+/* --- חיפוש --- */
+.controls-row {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.progress, .modern-search-field ::placeholder{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-items: center;
+}
+.modern-search-field {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  padding: 0px 16px;
+}
+
+::ng-deep .modern-search-field .mdc-notched-outline { display: none !important; } 
+::ng-deep .modern-search-field .mat-mdc-form-field-infix { padding-top: 8px !important; padding-bottom: 8px !important; min-height: auto !important;}
+::ng-deep .modern-search-field mat-icon { color: var(--primary-color); margin-left: 8px; }
+
+/* --- לוח הקנבן (Grid Layout) --- */
+.board-layout {
+  display: grid;
+  /* כאן הקסם: 3 עמודות שוות במחשב, עמודה אחת בנייד */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 24px;
+  flex: 1;
+  overflow-y: hidden; /* הגלילה תהיה בתוך הטורים */
+  padding-bottom: 10px;
+  min-height: 0; /* קריטי ל-Grid כדי לא לחרוג */
+}
+
+/* עיצוב הטורים */
+.board-column {
+  background-color: var(--column-bg);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid rgba(0,0,0,0.03);
+  height: 100%; /* תופס את כל הגובה הזמין */
+  min-width: 0; /* מונע שבירה ב-Grid */
+  box-sizing: border-box;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.column-header h2 { margin: 0; font-size: 18px; font-weight: 700; color: #37474f; }
+
+.badge {
+  background: white; padding: 4px 10px; border-radius: 12px;
+  font-size: 12px; font-weight: 800; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.header-todo .badge { color: #f57c00; }
+.header-progress .badge { color: #1976d2; }
+.header-done .badge { color: #388e3c; }
+
+/* רשימת המשימות - גלילה פנימית */
+.task-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px;
+  /* עיצוב סרגל גלילה */
+  scrollbar-width: thin;
+  scrollbar-color: #cfd8dc transparent;
+}
+
+/* --- כרטיס משימה --- */
+.task-wrapper { position: relative; }
+
+.task-card {
+  border-radius: 12px !important;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02) !important;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08) !important;
+}
+
+.task-card mat-card-content { padding: 16px 16px 10px 16px; }
+
+.task-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; padding-left: 20px; }
+.task-title.done-text { text-decoration: line-through; opacity: 0.6; }
+.task-desc { font-size: 13px; color: #78909c; margin-bottom: 12px; line-height: 1.4; }
+
+/* כפתור מחיקה */
+.card-delete-btn {
+  position: absolute; top: 8px; left: 8px;
+  width: 28px; height: 28px;
+  background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10;
+  color: #757575;
+}
+.card-delete-btn:hover { background-color: #ffebee; border-color: #ef5350; color: #d32f2f; }
+.card-delete-btn span { font-size: 14px; font-weight: bold; }
+
+/* Footer של הכרטיס */
+.card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 10px; border-top: 1px dashed #eceff1; padding-top: 8px;
+}
+
+.footer-icons { display: flex; align-items: center; gap: 8px; color: #90a4ae; font-size: 12px; }
+.icon-group { display: flex; align-items: center; gap: 4px; }
+.icon-group mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+/* בחירת עדיפות - ניקוי עיצוב */
+::ng-deep .clean-priority-select .mdc-notched-outline { display: none !important; }
+::ng-deep .clean-priority-select .mat-mdc-form-field-infix { padding: 0 !important; width: auto !important; min-height: auto !important; border-top: 0 !important; }
+::ng-deep .clean-priority-select .mat-mdc-select-arrow-wrapper { display: none !important; }
+::ng-deep .clean-priority-select .mat-mdc-select-value { font-size: 13px; font-weight: 800; }
+
+::ng-deep .clean-priority-select.text-high .mat-mdc-select-value-text { color: #e53935; }
+::ng-deep .clean-priority-select.text-normal .mat-mdc-select-value-text { color: #1976d2; }
+::ng-deep .clean-priority-select.text-low .mat-mdc-select-value-text { color: #43a047; }
+
+/* Drag Placeholder */
+.custom-placeholder {
+  background: rgba(0,0,0,0.03); border: 2px dashed rgba(0,0,0,0.1);
+  min-height: 80px; border-radius: 12px; margin-bottom: 12px;
+}
+
+/* --- דיאלוג (MODAL) --- */
+.dialog-container { display: flex; flex-direction: column; height: 100%; max-height: 90vh; background: #fff; overflow: hidden; }
+.dialog-header { background: #f8f9fa; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+.close-btn { color: #546e7a; }
+
+.dialog-body-split { display: flex; flex: 1; overflow: hidden; }
+.form-section { flex: 1; padding: 24px; overflow-y: auto; border-left: 1px solid #f0f0f0; display: flex; flex-direction: column; }
+.task-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: flex; gap: 16px; }
+.form-row mat-form-field { flex: 1; }
+
+.opt-low { color: #388e3c; font-weight: bold; }
+.opt-normal { color: #1976d2; font-weight: bold; }
+.opt-high { color: #d32f2f; font-weight: bold; }
+
+.dialog-actions { display: flex; margin-top: auto; padding-top: 20px; }
+.spacer { flex: 1; }
+.save-btn { padding: 0 32px; height: 42px; }
+
+/* Chat Section */
+.chat-section { flex: 0.8; background-color: #fcfcfc; display: flex; flex-direction: column; padding: 16px; overflow: hidden; }
+.chat-messages { flex: 1; padding-right: 8px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+.message-bubble { background: white; padding: 10px 14px; border-radius: 12px 12px 0 12px; border: 1px solid #eee; font-size: 14px; }
+.msg-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px; color: #78909c; }
+.empty-chat { text-align: center; color: #b0bec5; margin-top: 40px; }
+.empty-chat mat-icon { font-size: 48px; width: 48px; height: 48px; opacity: 0.5; }
+.chat-input { margin-top: 12px; }
+.full-width { width: 100%; }
+
+/* --- RESPONSIVE MEDIA QUERIES (החלק החשוב) --- */
+
+/* טאבלטים ומטה (מתחת ל-1024px) */
+@media (max-width: 1024px) {
+  .page-layout-content {
+    height: auto; /* ביטול גובה קבוע כדי לאפשר גלילת דף */
+    min-height: 100vh;
+    padding: 16px;
+    overflow-y: auto; /* אפשור גלילה */
+  }
+
+  .board-layout {
+    grid-template-columns: 1fr; /* טור אחד בלבד */
+    gap: 32px; /* רווח גדול בין הטורים */
+    overflow: visible; /* הגלילה עוברת לדף הראשי */
+  }
+
+  .board-column {
+    height: auto; /* הגובה נקבע לפי התוכן */
+    max-height: 600px; /* הגבלה אופציונלית לגובה כל טור */
+    overflow-y: auto; /* גלילה פנימית אם הטור ארוך מדי */
+  }
+}
+
+/* מובייל (מתחת ל-768px) */
+@media (max-width: 768px) {
+  .header-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .header-left {
+    justify-content: space-between;
+  }
+
+  .actions-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  /* דיאלוג במובייל */
+  .dialog-body-split {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .form-section {
+    border-left: none;
+    border-bottom: 1px solid #eee;
+    flex: none; /* ביטול גמישות */
+  }
+  
+  .chat-section {
+    flex: none;
+    height: 400px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

@@ -1,0 +1,146 @@
+
+
+/* פריסת העמוד */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--app-bg);
+  background: linear-gradient(135deg, #edeef1 0%, #8c97d7 100%); ;
+}
+
+/* סרגל הכלים */
+.main-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--app-primary);
+  color: white;
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px; /* רווח ברירת מחדל בין אלמנטים */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+/* --- לוגו --- */
+.brand-text {
+  font-family: 'Pacifico', cursive;
+  font-size: 26px;
+  font-weight: 400;
+  cursor: pointer;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  white-space: nowrap;
+}
+
+/* --- קישורים (דסקטופ) --- */
+.nav-links-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* עיצוב הקישורים */
+a[mat-button] {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; 
+  font-size: 15px;
+  font-weight: 400 !important;
+  padding: 0 24px;
+  min-width: auto;
+  border-radius: 20px;
+  transition: background-color 0.2s ease;
+  height: 36px;
+  line-height: 36px;
+  color: white;
+}
+
+.active-link-highlight {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Spacer */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* --- אזור משתמש --- */
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin-right: auto; /* דחיפה שמאלה במקרה שה-spacer נעלם */
+}
+
+.user-greeting {
+  opacity: 0.9;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* --- כפתור יציאה --- */
+.logout-btn {
+  color: white !important;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.logout-btn:hover {
+  opacity: 1;
+  background-color: rgba(255,255,255,0.1);
+}
+
+.logout-btn mat-icon {
+  display: block !important; 
+  font-size: 24px;
+}
+
+/* --- כפתור תפריט (המבורגר) - מוסתר כברירת מחדל --- */
+.mobile-menu-btn {
+  display: none; /* מוסתר בדסקטופ */
+  color: white;
+  margin-left: -8px; /* תיקון ריווח קטן */
+}
+
+/* === רספונסיביות (Media Queries) === */
+
+/* טאבלטים ומובייל (מתחת ל-960px) */
+@media (max-width: 960px) {
+  
+  .main-toolbar {
+    padding: 0 16px; /* הקטנת ריפוד בצדדים */
+    justify-content: space-between;
+  }
+
+  /* הצגת כפתור התפריט */
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  /* הסתרת הקישורים הרגילים */
+  .desktop-only {
+    display: none !important;
+  }
+  
+  /* הקטנת הלוגו */
+  .brand-text {
+    font-size: 22px;
+  }
+  
+  /* התאמת אזור המשתמש */
+  .user-actions {
+    gap: 8px;
+    margin-right: 0;
+  }
+}
+
+/* מובייל קטן מאוד (מתחת ל-400px) */
+@media (max-width: 400px) {
+  .brand-text {
+    font-size: 20px; /* עוד הקטנה אם צריך */
+  }
+}

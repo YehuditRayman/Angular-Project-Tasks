@@ -1,0 +1,254 @@
+<div class="page-layout-content">
+
+  <header class="header-row">
+    <div class="header-left">
+      <a mat-icon-button [routerLink]="['/projects', projectId()]" class="back-btn">
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+      <h1 class="page-title">Task-Board : {{ projectId() }}</h1>
+    </div>
+
+    <div class="actions-container">
+      <button color="accent" class="animated-fab" (click)="openCreate()">
+        <span class="plus-sign">+</span>
+        <span class="fab-text">Add task</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="controls-row">
+    <mat-form-field appearance="outline" class="modern-search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput (input)="onSearch($event)" placeholder="Search task...">
+    </mat-form-field>
+  </div>
+
+  @if (tasksService.isLoading()) {
+  <div class="loading-state"><mat-spinner diameter="50"></mat-spinner></div>
+  }
+
+  <div class="board-layout" cdkDropListGroup>
+
+    <div class="board-column">
+      <div class="column-header header-todo">
+        <span class="progress">To be performed</span>
+        <span class="badge">{{ todoTasks().length }}</span>
+      </div>
+
+      <div class="task-list" cdkDropList id="todo" [cdkDropListData]="todoTasks()" (cdkDropListDropped)="drop($event)">
+        @for (task of todoTasks(); track task.id) {
+        <div class="task-wrapper" cdkDrag [cdkDragData]="task">
+          <mat-card class="task-card" (click)="openEdit(task)">
+            <button class="card-delete-btn" (click)="onDeleteTask(task); $event.stopPropagation()" matTooltip="Delete task">
+              <span>X</span>
+            </button>
+            <mat-card-content>
+              <div class="task-title">{{ task.title }}</div>
+              @if (task.description) { <div class="task-desc">{{ task.description }}</div> }
+              <div class="card-footer">
+                <div (mousedown)="$event.stopPropagation()" (click)="$event.stopPropagation()">
+                  <mat-form-field appearance="outline" class="clean-priority-select" [ngClass]="'text-' + (task.priority || 'normal')">
+                    <mat-select [value]="task.priority || 'normal'" (selectionChange)="onPriorityChange(task, $event.value)">
+                      <mat-option value="low">low</mat-option>
+                      <mat-option value="normal">normal</mat-option>
+                      <mat-option value="high">high</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="footer-icons">
+                  @if (task.due_date) {
+                  <span class="icon-group" matTooltip="Deadline">
+                    <mat-icon>event</mat-icon>
+                    <span>{{ task.due_date | date:'dd/MM/yy' }}</span>
+                  </span>
+                  }
+                  <span>💬</span>
+                  <span>✏</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <div *cdkDragPlaceholder class="custom-placeholder"></div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="board-column">
+      <div class="column-header header-progress">
+        <span class="progress">In progress</span>
+        <span class="badge">{{ inProgressTasks().length }}</span>
+      </div>
+
+      <div class="task-list" cdkDropList id="in_progress" [cdkDropListData]="inProgressTasks()" (cdkDropListDropped)="drop($event)">
+        @for (task of inProgressTasks(); track task.id) {
+        <div class="task-wrapper" cdkDrag [cdkDragData]="task">
+          <mat-card class="task-card" (click)="openEdit(task)">
+            <button class="card-delete-btn" (click)="onDeleteTask(task); $event.stopPropagation()" matTooltip="Delete task">
+              <span>X</span>
+            </button>
+            <mat-card-content>
+              <div class="task-title">{{ task.title }}</div>
+              @if (task.description) { <div class="task-desc">{{ task.description }}</div> }
+              <div class="card-footer">
+                <div (mousedown)="$event.stopPropagation()" (click)="$event.stopPropagation()">
+                  <mat-form-field appearance="outline" class="clean-priority-select" [ngClass]="'text-' + (task.priority || 'normal')">
+                    <mat-select [value]="task.priority || 'normal'" (selectionChange)="onPriorityChange(task, $event.value)">
+                      <mat-option value="low">low</mat-option>
+                      <mat-option value="normal">normal</mat-option>
+                      <mat-option value="high">high</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="footer-icons">
+                  @if (task.due_date) {
+                  <span class="icon-group">
+                    <mat-icon>event</mat-icon>
+                    <span>{{ task.due_date | date:'dd/MM/yy' }}</span>
+                  </span>
+                  }
+                  <span>💬</span>
+                  <span>✏</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <div *cdkDragPlaceholder class="custom-placeholder"></div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="board-column">
+      <div class="column-header header-done">
+        <span class="progress">Done</span>
+        <span class="badge">{{ doneTasks().length }}</span>
+      </div>
+
+      <div class="task-list" cdkDropList id="done" [cdkDropListData]="doneTasks()" (cdkDropListDropped)="drop($event)">
+        @for (task of doneTasks(); track task.id) {
+        <div class="task-wrapper" cdkDrag [cdkDragData]="task">
+          <mat-card class="task-card" (click)="openEdit(task)">
+            <button class="card-delete-btn" (click)="onDeleteTask(task); $event.stopPropagation()" matTooltip="Delete task">
+              <span>X</span>
+            </button>
+            <mat-card-content>
+              <div class="task-title done-text">{{ task.title }}</div>
+              <div class="card-footer">
+                <div (mousedown)="$event.stopPropagation()" (click)="$event.stopPropagation()">
+                  <mat-form-field appearance="outline" class="clean-priority-select" [ngClass]="'text-' + (task.priority || 'normal')">
+                    <mat-select [value]="task.priority || 'normal'" (selectionChange)="onPriorityChange(task, $event.value)">
+                      <mat-option value="low">low</mat-option>
+                      <mat-option value="normal">normal</mat-option>
+                      <mat-option value="high">high</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="footer-icons">
+                  @if (task.due_date) {
+                  <span class="icon-group">
+                    <mat-icon>event</mat-icon>
+                    <span>{{ task.due_date | date:'dd/MM/yy' }}</span>
+                  </span>
+                  }
+                  <span>💬</span>
+                  <span>✏</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <div *cdkDragPlaceholder class="custom-placeholder"></div>
+        </div>
+        }
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #taskDialog>
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h2>{{ editingTaskId() ? 'Edit task' : 'Create task' }}</h2>
+      <button mat-icon-button (click)="closeModal()" class="close-btn">
+        <span>X</span>
+      </button>
+    </div>
+
+    <div class="dialog-body-split">
+      <div class="form-section">
+        <form [formGroup]="taskForm" class="task-form">
+          <mat-form-field appearance="outline">
+            <mat-label>title</mat-label>
+            <input matInput formControlName="title" cdkFocusInitial>
+            <mat-error>Required field</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="5"></textarea>
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Priority</mat-label>
+              <mat-select formControlName="priority">
+                <mat-option value="low" class="opt-low">low</mat-option>
+                <mat-option value="normal" class="opt-normal">normal</mat-option>
+                <mat-option value="high" class="opt-high">high</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Deadline</mat-label>
+              <input matInput type="date" formControlName="due_date">
+            </mat-form-field>
+          </div>
+        </form>
+
+        <div class="dialog-actions">
+          @if (editingTaskId()) {
+          <button mat-flat-button color="warn" (click)="selectedTask() && onDeleteTask(selectedTask()!)" class="delete-action-btn">
+            <mat-icon>delete</mat-icon> Delete
+          </button>
+          } @else {
+          <span class="spacer"></span>
+          }
+          <button mat-raised-button color="primary" (click)="saveTask()" [disabled]="taskForm.invalid" class="save-btn">
+            Save
+          </button>
+        </div>
+      </div>
+
+      @if (editingTaskId()) {
+      <div class="chat-section">
+        <h3>Comments</h3>
+        <div class="chat-messages">
+          @for (comment of commentsService.currentComments(); track comment.id) {
+          <div class="message-bubble">
+            <div class="msg-header">
+              <strong>{{ comment.author_name }}</strong>
+              <span class="msg-time">{{ comment.created_at | date:'HH:mm' }}</span>
+            </div>
+            <div class="msg-body">{{ comment.body }}</div>
+          </div>
+          } @empty {
+          <div class="empty-chat">
+            <mat-icon>chat_bubble_outline</mat-icon>
+            <p>No comments</p>
+          </div>
+          }
+        </div>
+        <div class="chat-input">
+          <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+            <input matInput [formControl]="commentControl" placeholder="Enter a comment..." (keydown.enter)="sendComment()">
+            <button mat-icon-button matSuffix (click)="sendComment()" color="primary">
+              <mat-icon>send</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</ng-template>

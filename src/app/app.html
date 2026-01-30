@@ -1,0 +1,51 @@
+<div class="app-layout">
+  
+  @if (authService.currentUser()) {
+    <mat-toolbar color="primary" class="main-toolbar">
+      
+      <span class="brand-text" routerLink="/teams">Task Manager</span>
+
+      <span class="spacer"></span>
+
+      <div class="nav-links-container">
+        <a mat-button 
+           routerLink="/teams" 
+           routerLinkActive="active-link-highlight"
+           [routerLinkActiveOptions]="{exact: false}">
+          My Teams
+        </a>
+        <a mat-button 
+           routerLink="/all-projects" 
+           routerLinkActive="active-link-highlight"
+           [routerLinkActiveOptions]="{exact: false}">
+          All Projects
+        </a>
+        <a mat-button 
+           routerLink="/all-tasks" 
+           routerLinkActive="active-link-highlight"
+           [routerLinkActiveOptions]="{exact: false}">
+           All Tasks  
+        </a>
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="user-actions">
+        <span class="user-greeting">
+          Hi, {{ authService.currentUser()?.name }}
+        </span>
+        
+        <button mat-icon-button (click)="authService.logout()" class="logout-btn" title="Logout">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+
+    </mat-toolbar>
+  }
+
+  <main class="main-content-wrapper">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
+<app-toast></app-toast>

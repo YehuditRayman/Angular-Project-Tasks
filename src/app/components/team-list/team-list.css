@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+/* --- Layout --- */
+.page-layout-content {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+/* --- כותרת --- */
+h1.page-title {
+  font-family: 'Pacifico', cursive !important;
+  font-size: 42px;
+  color: var(--app-primary);
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 400;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+}
+
+/* ======================================================== */
+/* === כפתור הוספה מעוצב (Squircle + Rotation) === */
+/* ======================================================== */
+/* אנו משתמשים במחלקה הקיימת ב-HTML שלך אבל משנים את המראה */
+
+.add-btn-wide {
+  transform: scale(0.9);
+  box-shadow: 0 4px 15px rgba(40, 53, 147, 0.25) !important;
+  transition: transform 0.2s ease;
+  background: linear-gradient(135deg, var(--app-primary), #5c6bc0) !important;
+}
+.add-btn-wide:hover {
+  transform: scale(1.1) rotate(90deg);
+}
+.add-btn-wide mat-icon { color: white; }
+
+
+/* ================================================= */
+/* === גריד וכרטיסים (כמו במקור) === */
+/* ================================================= */
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.team-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(0,0,0,0.05);
+  background: linear-gradient(145deg, #ffffff 0%, #f9fafd 100%);
+  border-radius: 16px;
+}
+
+/* אפקט הרמה לכרטיס */
+.team-card.hover-elevate:hover {
+  transform: translateY(-8px);
+  background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%) !important;
+  border-color: var(--app-primary);
+  box-shadow: 0 14px 28px rgba(40, 53, 147, 0.15);
+}
+
+.team-card mat-card-title {
+  color: var(--app-primary);
+  font-weight: 500;
+  font-size: 20px;
+}
+
+/* מידע נוסף (חברים בצוות) */
+.meta-info {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255,255,255, 0.6);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.team-card.hover-elevate:hover .meta-info {
+  background-color: #ffffff;
+  transform: scale(1.02);
+}
+
+.label { color: #546e7a; font-weight: 500; }
+.value { color: #263238; font-weight: 700; }
+
+/* כפתור כניסה בתוך הכרטיס */
+.enter-btn {
+  transition: all 0.3s ease;
+  background-color: transparent;
+  border: 1px solid var(--app-primary);
+  color: var(--app-primary);
+  border-radius: 8px;
+}
+
+.team-card:hover .enter-btn {
+  background-color: var(--app-primary) !important;
+  color: white !important;
+}
+
+/* מצבי טעינה ושגיאה */
+.loading-state, .error-state, .empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+.empty-state{
+  text-align: center;
+}
+/* --- כפתור אנימציה מתוקן --- */
+.animated-fab {
+  /* צורה התחלתית: ריבוע מעוגל ולא עיגול מלא */
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 12px !important; /* <--- זה מה שעושה את זה ריבועי יותר */
+  
+  padding: 0 !important;
+  min-width: auto !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* חובה כדי שהטקסט לא יברח החוצה */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+}
+
+/* האייקון */
+.animated-fab .mat-icon {
+  margin: 0 !important;
+  transition: transform 0.5s ease;
+  flex-shrink: 0; /* מונע מהאייקון להתכווץ */
+}
+
+/* הטקסט - מוסתר בהתחלה */
+.fab-text {
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 0;
+  transition: all 0.3s ease;
+}
+
+/* === מצב מעבר עכבר (HOVER) === */
+
+.animated-fab:hover {
+  width: 140px !important; /* נפתח לרוחב */
+  padding-left: 16px !important; /* נותן מרווח בקצה */
+  padding-right: 8px !important;
+}
+
+.animated-fab:hover .mat-icon {
+  transform: rotate(360deg); /* סיבוב */
+}
+
+.animated-fab:hover .fab-text {
+  max-width: 100px; /* נותן מקום לטקסט */
+  opacity: 1;
+  margin-right: 8px; /* דוחף את הטקסט שמאלה מהאייקון שלא יעלו אחד על השני */
+}
+/* --- כפתור אנימציה מתוקן --- */
+.animated-fab {
+  /* צורה התחלתית: ריבוע מעוגל */
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important; /* פינות מעוגלות (מראה ריבועי) */
+  
+  /* סידור פנימי */
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  
+  /* אנימציה */
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  overflow: hidden; /* חובה כדי שהטקסט לא יברח */
+}
+
+/* האייקון */
+.animated-fab .mat-icon {
+  margin: 0 !important;
+  transition: transform 0.5s ease;
+  flex-shrink: 0; /* מונע מהאייקון להתכווץ */
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* הטקסט - מוסתר בהתחלה */
+.fab-text {
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin: 0; /* איפוס מרג'ין */
+}
+
+/* === מצב מעבר עכבר (HOVER) === */
+
+.animated-fab:hover {
+  width: 150px !important; /* נפתח לרוחב גדול יותר */
+  justify-content: flex-start !important; /* מצמיד להתחלה */
+  padding-right: 12px !important; /* רווח מצד ימין (RTL) */
+}
+
+.animated-fab:hover .mat-icon {
+  transform: rotate(360deg); /* סיבוב */
+  margin-left: 8px !important; /* רווח בין האייקון לטקסט */
+}
+
+.animated-fab:hover .fab-text {
+  max-width: 100px; /* נותן מקום לטקסט */
+  opacity: 1;
+}
+/* --- כפתור אנימציה --- */
+.animated-fab {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important; /* ריבועי מעוגל */
+  
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+/* === עיצוב הפלוס החדש (במקום האייקון) === */
+.plus-sign {
+  font-size: 32px;       /* גודל הפלוס */
+  line-height: 32px;     /* גובה שורה למרכוז */
+  font-weight: 300;      /* עובי הפלוס (אפשר לשנות ל-400 אם רוצים עבה יותר) */
+  margin-bottom: 2px;    /* תיקון קטן למרכוז אנכי */
+  transition: transform 0.5s ease;
+  flex-shrink: 0;
+  color:white;
+}
+
+/* הטקסט שמוסתר בהתחלה */
+.fab-text {
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 15px;       /* טקסט קריא */
+  font-weight: 600;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.animated-fab{
+  background: linear-gradient(135deg, #2b3da3 0%, #7884d3 100%) !important;
+}
+/* === מצב מעבר עכבר (HOVER) === */
+
+.animated-fab:hover {
+  width: 150px !important;      /* רוחב הכפתור בפתיחה */
+  justify-content: center !important; 
+  gap: 8px;                     /* רווח אוטומטי בין הפלוס לטקסט */
+  padding-right: 0 !important;
+}
+
+/* סיבוב הפלוס */
+.animated-fab:hover .plus-sign {
+  transform: rotate(180deg);    /* סיבוב מלא של הפלוס */
+}
+
+/* הופעת הטקסט */
+.animated-fab:hover .fab-text {
+  max-width: 100px;
+  opacity: 1;
+  color: white;
+}

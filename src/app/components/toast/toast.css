@@ -1,0 +1,47 @@
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+  min-width: 300px;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  
+  animation: slideUp 0.3s ease-out;
+}
+
+/* צבעים לפי סוג ההודעה */
+.success {
+  background-color: #2ecc71; /* ירוק */
+}
+
+.error {
+  background-color: #e74c3c; /* אדום */
+}
+
+.info {
+  background-color: #3498db; /* כחול */
+}
+
+/* אנימציה */
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,407 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+/* --- Layout --- */
+.page-layout-content {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-row {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+
+/* --- Search Bar --- */
+.controls-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.controls-row ::placeholder{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.modern-search-field {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 2px 16px;
+  border: 1px solid transparent;
+  transition: all 0.3s;
+}
+
+.modern-search-field:focus-within {
+  box-shadow: 0 8px 20px rgba(40, 53, 147, 0.15);
+  transform: translateY(-2px);
+}
+
+::ng-deep .modern-search-field .mdc-notched-outline { display: none !important; }
+::ng-deep .modern-search-field .mat-mdc-form-field-subscript-wrapper { display: none; }
+::ng-deep .modern-search-field .mat-mdc-form-field-infix { padding-top: 8px !important; padding-bottom: 8px !important; min-height: auto !important;}
+
+/* --- Grid (כרטיסים קטנים) --- */
+.content-grid {
+  display: grid;
+  /* גודל מוקטן לכרטיסים */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+  gap: 20px;
+}
+
+/* --- Project Card (Blue Gradient Default) --- */
+.project-card {
+  height: 100%;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  border: 1px solid rgb(55, 55, 177);
+  overflow: hidden;
+
+  /* רקע כחול גרדיאנט */
+  background: linear-gradient(135deg, #edeef1 0%, #7885d3 100%); 
+  box-shadow: 0 6px 15px rgba(63, 81, 181, 0.25);
+}
+
+.project-card mat-card-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.project-desc {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Button inside card */
+.action-btn {
+  width: 100%;
+  border-radius: 20px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s !important;
+  box-shadow: none !important;
+
+  /* כפתור כחול כהה על רקע כחול */
+  background-color: #283593 !important;
+  color: white !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+}
+
+/* --- Hover State (Inverted to White) --- */
+.project-card:hover {
+  transform: translateY(-6px);
+  
+  /* הופך ללבן */
+  background: #ffffff;
+  border-color: var(--app-primary);
+  box-shadow: 0 10px 25px rgba(63, 81, 181, 0.2);
+}
+
+.project-card:hover mat-card-title {
+  color: var(--app-primary);
+}
+
+.project-card:hover .project-desc {
+  color: #546e7a;
+}
+
+.project-card:hover .action-btn {
+  /* כפתור הופך ללבן עם טקסט כחול */
+  background-color: white !important;
+  color: var(--app-primary) !important;
+  border: 1px solid var(--app-primary) !important;
+}
+
+/* --- Loading / Empty --- */
+.loading-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+.empty-state h3 { color: #90a4ae; margin-top: 16px; }
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+/* --- Layout --- */
+.page-layout-content {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+h1.page-title {
+  font-family: 'Pacifico', cursive !important;
+  font-size: 42px;
+  color: var(--app-primary);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* --- כפתור הוספה (+) --- */
+.clean-fab {
+  transform: scale(0.9);
+  box-shadow: 0 4px 15px rgba(40, 53, 147, 0.25) !important;
+  transition: transform 0.2s ease;
+  background: linear-gradient(135deg, var(--app-primary), #5c6bc0) !important;
+}
+.clean-fab:hover {
+  transform: scale(1.1) rotate(90deg);
+}
+.clean-fab mat-icon { color: white; }
+
+
+/* --- Grid --- */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 20px;
+}
+
+
+/* ================================================= */
+/* === עיצוב הכרטיס המיוחד (Blue Gradient Card) === */
+/* ================================================= */
+
+.project-card {
+  height: 100%;
+  display: flex;
+  min-height: 200px; /* גובה מינימלי קטן יותר */
+  flex-direction: column;
+  border-radius: 10px !important; /* פינות עגולות יותר כמו בתמונה */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  border: 1px solid transparent;
+  overflow: hidden;
+  border: 1px solid rgb(55, 55, 177);
+  /* --- מצב רגיל: כחול גרדיאנט --- */
+  /* זה הגרדיאנט שיוצר את המראה הכחול-סגלגל המרשים */
+  background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%); /* גוון בהיר מאוד בתור בסיס */
+  /* נחליף לגרדיאנט כחול חזק כמו שביקשת */
+  background: linear-gradient(135deg, #edeef1 0%, #7885d3 100%); 
+  
+  box-shadow: 0 8px 20px rgba(63, 81, 181, 0.3); /* צל כחול */
+}
+
+/* כותרת הכרטיס */
+.project-card mat-card-title {
+  color: white; /* טקסט לבן על רקע כחול */
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* תיאור הפרויקט */
+.project-desc {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px; /* הוקטן מ-14px */
+  line-height: 1.4;
+  margin-bottom: 16px;
+  height: 36px; /* גובה קבוע ל-2 שורות בערך */
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* מגביל ל-2 שורות */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* הקופסה הלבנה בפנים (כמו בתמונה - "חברים בצוות") */
+.white-info-box {
+  background: white;
+  border-radius: 10px;
+  padding: 8px 12px; /* ריווח פנימי צפוף יותר */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.white-info-box .label { color: #546e7a; font-size: 13px; font-weight: 500; }
+.white-info-box .value { color: #263238; font-size: 14px; font-weight: 700; }
+
+
+/* --- כפתור הפעולה (בתוך הכרטיס הכחול) --- */
+.action-btn {
+  width: 100%;
+  border-radius: 20px !important;
+  padding: 4px 0 !important; /* כפתור נמוך יותר */
+  font-size: 13px !important; /* טקסט קטן יותר */
+  font-weight: 600 !important;
+  transition: all 0.3s !important;
+  height: 32px !important; /* גובה קבוע קטן */
+  line-height: 32px !important;
+  
+  background-color: #283593 !important;
+  color: white !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+}
+
+
+/* ========================================= */
+/* === מצב מעבר עכבר (Hover) - הופך ללבן === */
+/* ========================================= */
+
+.project-card:hover {
+  transform: translateY(-8px);
+  
+  /* הרקע הופך ללבן נקי */
+  background: #ffffff;
+  
+  /* מסגרת כחולה */
+  border-color: var(--app-primary);
+  box-shadow: 0 12px 30px rgba(63, 81, 181, 0.25);
+}
+
+/* הכותרת הופכת לכחול */
+.project-card:hover mat-card-title {
+  color: var(--app-primary);
+}
+
+/* התיאור הופך לאפור */
+.project-card:hover .project-desc {
+  color: #546e7a;
+}
+
+/* הקופסה הלבנה בפנים מקבלת רקע אפור בהיר כדי לבלוט על הלבן */
+.project-card:hover .white-info-box {
+  background: #f5f7fa;
+  box-shadow: none;
+  border: 1px solid #eee;
+}
+
+/* הכפתור מתהפך: רקע לבן, מסגרת כחולה, טקסט כחול */
+.project-card:hover .action-btn {
+  background-color: white !important;
+  color: var(--app-primary) !important;
+  border: 1px solid var(--app-primary) !important;
+}
+
+
+/* --- שאר העיצוב --- */
+.loading-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+/* Modal Styles (אותו דבר) */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  z-index: 1000; display: flex; justify-content: center; align-items: center;
+  animation: fadeIn 0.2s ease-out;
+}
+.modal-box {
+  background: white; width: 100%; max-width: 400px;
+  padding: 24px; box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14);
+  display: flex; flex-direction: column; gap: 16px;
+  animation: slideUp 0.3s ease-out;
+}
+.modal-box h2 { margin: 0; color: var(--app-primary); font-family: 'Segoe UI', sans-serif; }
+.styled-input {
+  width: 100%; padding: 12px; border: 1px solid #e0e0e0;
+  border-radius: 8px; font-family: inherit; font-size: 14px; box-sizing: border-box;
+}
+.styled-input:focus { outline: none; border-color: var(--app-primary); box-shadow: 0 0 0 3px rgba(40, 53, 147, 0.1); }
+.modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.plus-sign {
+  font-size: 32px;       /* גודל הפלוס */
+  line-height: 32px;     /* גובה שורה למרכוז */
+  font-weight: 300;      /* עובי הפלוס (אפשר לשנות ל-400 אם רוצים עבה יותר) */
+  margin-bottom: 2px;    /* תיקון קטן למרכוז אנכי */
+  transition: transform 0.5s ease;
+  flex-shrink: 0;
+  color:white;
+}
+
+/* הטקסט שמוסתר בהתחלה */
+.fab-text {
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  font-size: 15px;       /* טקסט קריא */
+  font-weight: 600;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.animated-fab{
+  background: linear-gradient(135deg, #2b3da3 0%, #7884d3 100%) !important;
+}
+/* === מצב מעבר עכבר (HOVER) === */
+
+.animated-fab:hover {
+  width: 150px !important;      /* רוחב הכפתור בפתיחה */
+  justify-content: center !important; 
+  gap: 8px;                     /* רווח אוטומטי בין הפלוס לטקסט */
+  padding-right: 0 !important;
+}
+
+/* סיבוב הפלוס */
+.animated-fab:hover .plus-sign {
+  transform: rotate(180deg);    /* סיבוב מלא של הפלוס */
+}
+
+/* הופעת הטקסט */
+.animated-fab:hover .fab-text {
+  max-width: 100px;
+  opacity: 1;
+  color: white;
+}
+.animated-fab:hover {
+  width: 150px !important; /* נפתח לרוחב גדול יותר */
+  justify-content: flex-start !important; /* מצמיד להתחלה */
+  padding-right: 12px !important; /* רווח מצד ימין (RTL) */
+}
+
+.animated-fab:hover .mat-icon {
+  transform: rotate(360deg); /* סיבוב */
+  margin-left: 8px !important; /* רווח בין האייקון לטקסט */
+}
+
+.animated-fab:hover .fab-text {
+  max-width: 100px; /* נותן מקום לטקסט */
+  opacity: 1;
+}
+/* --- כפתור אנימציה --- */
+.animated-fab {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important; /* ריבועי מעוגל */
+  
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+}

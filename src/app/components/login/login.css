@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+.mat-headline-small{
+    font-family: 'Pacifico', cursive !important;
+}
+.center-layout-container{
+  background: linear-gradient(135deg, #edeef1 0%, #5665b9 100%); 
+}

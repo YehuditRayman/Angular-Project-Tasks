@@ -1,0 +1,17 @@
+@if (toastService.isVisible()) {
+  <div class="toast-container" 
+       [ngClass]="toastService.type()" 
+       (click)="toastService.close()">
+    
+    <div class="icon">
+      @if (toastService.type() === 'success') { ✅ }
+      @else if (toastService.type() === 'error') { ⚠️ }
+      @else { ℹ️ }
+    </div>
+    
+    <div class="message">
+      {{ toastService.message() }}
+    </div>
+
+  </div>
+}

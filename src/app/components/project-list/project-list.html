@@ -1,0 +1,78 @@
+<div class="page-layout-content">
+
+  <header class="header-row">
+    <div>
+      <h1 class="page-title">Projects in team : {{currentTeamId()}}</h1>
+    </div>
+     <div class="actions-container" style="display: flex; gap: 16px;">
+      <button color="accent" class="animated-fab" (click)="toggleCreate()">
+        <span class="plus-sign">+</span>
+        <span class="fab-text">Add a project</span>
+      </button>
+    </div>
+  </header>
+
+  @if (projectsService.isLoading()) {
+    <div class="loading-state"><mat-spinner diameter="50"></mat-spinner></div>
+  }
+
+  @else {
+    <main class="content-grid">
+      
+      @for (project of teamProjects(); track project.id) {
+        
+        <mat-card class="project-card" [routerLink]="['/projects', project.id, 'tasks']">
+          
+          <mat-card-header>
+            <mat-card-title style="margin-bottom: 0;">{{ project.name }}</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content style="margin-top: 16px; flex: 1; display: flex; flex-direction: column;">
+            
+            <div class="project-desc">
+               {{ project.description || 'No description' }}
+            </div>
+
+            <div class="white-info-box">
+              <span class="label">Associated staff:</span>
+              <span class="value">{{ project.team_id }}</span>
+            </div>
+
+            <div style="flex: 1;"></div>
+
+            <button mat-raised-button class="action-btn">
+              Enter tasks
+            </button>
+
+          </mat-card-content>
+
+        </mat-card>
+
+      } @empty {
+        <div class="empty-state">
+          <mat-icon style="font-size: 64px; height: 64px; width: 64px; opacity: 0.5; color: #90a4ae;">folder_open</mat-icon>
+          <h3>No projects</h3>
+          <p style="color: #666;">Create a new project to get started.</p>
+        </div>
+      }
+
+    </main>
+  }
+
+  @if (isCreateOpen()) {
+    <div class="modal-overlay" (click)="toggleCreate()">
+      <form [formGroup]="projectForm" class="modal-box" (ngSubmit)="createProject()" (click)="$event.stopPropagation()">
+        <h2>New project</h2>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <input type="text" formControlName="name" placeholder="Project name" class="styled-input" autofocus>
+          <textarea formControlName="description" placeholder="Description" rows="4" class="styled-input"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" mat-button (click)="toggleCreate()">Cancell</button>
+          <button type="submit" mat-raised-button color="primary" [disabled]="projectForm.invalid">Create project</button>
+        </div>
+      </form>
+    </div>
+  }
+
+</div>
